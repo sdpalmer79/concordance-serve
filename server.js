@@ -2,12 +2,11 @@ const logger = require('./lib/common/logging');
 const express = require('express');
 const expressWinston = require('express-winston');
 const mongo = require('./lib/storage/mongo');
-const siteGen = require('./lib/common/siteGen');
 const { v4 } = require('uuid');
 const app = express();
 const router = require('./lib/routers/router');
 
-const PORT = process.env.PORT || '4000';
+const PORT = process.env.PORT || '9292';
 
 let server;
 
@@ -34,13 +33,6 @@ server.on('listening', async () => {
 
 server.on('error', (err) => {
     logger.error('Server error ', err);
-});
-
-mongo.getMediator().on('db.ready', () => {
-    siteGen.startSiteMaintenance()
-});
-mongo.getMediator().on('db.down', () => {
-    siteGen.stopSiteMaintenance();
 });
 
 process.on("SIGINT", async (code) => {
