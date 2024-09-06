@@ -23,6 +23,7 @@ app.use(expressWinston.logger({
     winstonInstance: logger
 }));
 app.use(requestStartHandler);
+app.use(express.json());
 app.use('/', router);
 server = app.listen(PORT);
 
